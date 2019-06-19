@@ -5,6 +5,8 @@
 #include "Bulk_quote.h"
 #include "Quote.h"
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 double print_total(std::ostream &os,const Quote &item,size_t n)
 {
@@ -28,7 +30,7 @@ int main()
 	a = a;
 	Quote c(a);
 	Bulk_quote testBulk;
-	Bulk_quote sale1("Alla ja v bar", 1337,3, 0.14);
+	Bulk_quote sale1("0-201-54748-8", 1337,3, 0.14);
 	auto ts = static_cast<Quote> (sale1);
 	//auto td = dynamic_cast<Quote> (testBulk);
 	//auto td = dynamic_cast<Bulk_quote&>(testQuote);
@@ -41,6 +43,16 @@ int main()
 	Bulk_quote bq2("ss", 2.05, 12, 0.3);
 	bq2 = std::move(bq2);
     std::cout << "Hello World!\n";
+	std::vector<std::shared_ptr<Quote>> basket;
+	basket.push_back(std::make_shared<Bulk_quote>(sale1));
+	basket.push_back(std::make_shared<Bulk_quote>("0-201-54848-8", 50, 10, .25));
+	basket.push_back(std::make_shared<Bulk_quote>("0-211-54848-8", 54, 40, .35));
+	double counter=0.0;
+	std::for_each(basket.begin(), basket.end(), 
+		[basket,&counter](std::shared_ptr<Quote> i)
+	{counter += i->net_price(15);
+		std::cout<< i->net_price(15)<<std::endl;});
+	std::cout << "Full price is: " << counter<<std::endl;
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
