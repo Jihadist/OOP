@@ -15,6 +15,8 @@ public:
 	Bulk_quote& operator=(const Bulk_quote&);
 	Bulk_quote& operator=(Bulk_quote&&) noexcept;
 	void debug() override;
+	Bulk_quote* clone() const & { return new Bulk_quote(*this); }
+	Bulk_quote* clone() && { return new Bulk_quote(std::move(*this)); }
 private:
 	//size_t min_qty = 0;
 	//double discount=0.0;

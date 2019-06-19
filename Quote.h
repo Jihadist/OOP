@@ -15,6 +15,9 @@ public:
 	std::string isbn() const { return bookNo; };
 	virtual double net_price(size_t n=1) const { return  n * price; };
 	virtual void debug();
+
+	virtual Quote* clone() const & { return new Quote(*this); }
+	virtual Quote* clone() && { return new Quote(std::move(*this)); }
 private:
 	std::string bookNo;
 protected:
