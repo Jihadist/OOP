@@ -23,3 +23,5 @@ private:
 protected:
 	double price = 0.0;
 };
+
+double print_total(std::ostream &os, const Quote &item, size_t n);

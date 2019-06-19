@@ -2,14 +2,14 @@
 #include "Quote.h"
 #include "Disc_quote.h"
 
-class Bulk_quote : public Disc_quote {
+class Bulk_quote : public Quote {
 
 public:
-	friend bool operator!=(const Bulk_quote& lhs, const Bulk_quote& rhs);
+	//friend bool operator!=(const Bulk_quote& lhs, const Bulk_quote& rhs);
 	double net_price(size_t n) const override;
 	Bulk_quote() = default;
 	Bulk_quote(const std::string& book, double price, std::size_t qty, double disc) :
-		Disc_quote(book, price,qty,disc) {};
+		Quote(book, price), quantity(qty), discount(disc) {};
 	Bulk_quote(const Bulk_quote&);
 	Bulk_quote(Bulk_quote &&) noexcept;
 	Bulk_quote& operator=(const Bulk_quote&);
@@ -18,8 +18,8 @@ public:
 	Bulk_quote* clone() const & { return new Bulk_quote(*this); }
 	Bulk_quote* clone() && { return new Bulk_quote(std::move(*this)); }
 private:
-	//size_t min_qty = 0;
-	//double discount=0.0;
+	size_t quantity = 0;
+	double discount=0.0;
 };
 
 

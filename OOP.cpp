@@ -8,13 +8,14 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
-double print_total(std::ostream &os,const Quote &item,size_t n)
+/*double print_total(std::ostream &os,const Quote &item,size_t n)
 {
 	double ret = item.net_price(n);
 	os << "ISBN: " << item.isbn() << " # sold: " << n << " total due: " << ret << std::endl;
 	return ret;
-}
+}*/
 
 int main()
 {
@@ -62,7 +63,23 @@ int main()
 	set.add_item(*item2);
 	set.add_item(*item3);
 	set.total_receipt(std::cout);
-	set.print_total(std::cout,book1, 1);
+	print_total(std::cout,book1, 1);
+
+
+	Basket basket;
+
+	for (unsigned i = 0; i != 10; ++i)
+		basket.add_item(Bulk_quote("Bible", 20.6, 20, 0.3));
+
+	for (unsigned i = 0; i != 10; ++i)
+		basket.add_item(Bulk_quote("C++Primer", 30.9, 5, 0.4));
+
+	for (unsigned i = 0; i != 10; ++i)
+		basket.add_item(Quote("CLRS", 40.1));
+
+	std::ofstream log("log.txt", std::ios_base::app | std::ios_base::out);
+
+	basket.total_receipt(log);
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
